@@ -1,0 +1,24 @@
+    private:
+    int lengthOfLinkedList(ListNode* head) {
+        int length = 0;
+        while (head) {
+            length++;
+            head = head->next;
+        }
+        
+        return length;
+    }
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* res=new ListNode(0);
+        ListNode* p=res;
+        res->next=head;
+        int length=lengthOfLinkedList(head);
+        length-=n;
+        while(length){
+            p=p->next;
+            length--;
+        }
+        p->next=p->next->next;
+        return res->next;
+    }
