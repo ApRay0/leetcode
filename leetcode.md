@@ -148,4 +148,52 @@ public:
 };
 ```
 
-## 8.
+## 8.String to Integer (atoi)
+```cpp
+class Solution {
+public:
+    int myAtoi(string str) {
+        long long res = 0;
+        int n = str.size();
+        int i = 0, sign = 1;
+        while(str[i] = ' '){
+            i++;
+        }
+        if(str[i] == '-'){
+            sign = -1;
+            i++;
+        } 
+        if(str[i] == '+'){
+            i++;
+        }
+        while(str[i] <= '9' && str[i] >= '0' && i < n){
+            res = res * 10 + (str[i] - '0');
+            i++;
+            if( sign * res > INT_MAX) return INT_MAX;
+            if( sign * res < INT_MIN) return INT_MIN;
+        }
+        return sign * res;
+    }
+};
+```
+
+## 9.Palindrome Number
+```cpp
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0 || x != 0 && x % 10 == 0) return false;
+        int sum = 0;
+        while(x > sum){
+            sum = 10 * sum + x % 10;
+            x /= 10;
+        }
+        return (x == sum) || (x == sum / 10);
+    }
+};
+```
+
+## 10.Regular Expression Matching
+```cpp
+
+```
