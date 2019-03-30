@@ -195,5 +195,31 @@ public:
 
 ## 10.Regular Expression Matching
 ```cpp
+class Solution {
+private:
+    bool match(const string &s, const string &p, int index1, int index2)
+    {
+        int len1 = s.size(), len2 = p.size();
+        if(index2 == len2) return index1 == len1; 
+        
+        if(p[index2+1] != '*')
+        {
+           if( index1 < len1 && (p[index2] == s[index1] || p[index2] == '.')) return match(s, p, index1 + 1, index2 + 1);
+        }
+        else
+        {
+            if(match(s, p, index1, index2 + 2)) return true;
+            while(index1 < len1 && (p[index2] == s[index1] || p[index2] == '.')){
+                index1++;
+                if(match(s, p, index1, index2 + 2)) return true;
+            }
+        }
+        return false;
+    }
 
+public:
+    bool isMatch(string s, string p) {
+       return match(s, p, 0, 0); 
+    }
+};
 ```
