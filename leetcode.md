@@ -1,5 +1,7 @@
+
 # Solution Of Leetcode In C++
-## 1.Two Sum
+
+## 1. Two Sum
 ```cpp
 class Solution {
 public:
@@ -22,7 +24,7 @@ public:
 };
 ```
 
-## 2.Add Two Numbers
+## 2. Add Two Numbers
 ```cpp
 /**
  * Definition for singly-linked list.
@@ -55,7 +57,7 @@ public:
     }
 };
 ```
-## 3.Longest Substring Without Repeating Characters
+## 3. Longest Substring Without Repeating Characters
 ```cpp
 class Solution {
 public:
@@ -72,12 +74,12 @@ public:
 };
 ```
 
-## 4.Median of Two Sorted Arrays
+## 4. Median of Two Sorted Arrays
 ```cpp
 
 ```
 
-## 5.Longest Palindromic Substring
+## 5. Longest Palindromic Substring
 ```cpp
 class Solution {
 public:
@@ -107,7 +109,7 @@ public:
 };
 ```
 
-## 6.ZigZag Conversion
+## 6. ZigZag Conversion
 ```cpp
 class Solution {
 public:
@@ -132,7 +134,7 @@ public:
 };
 ```
 
-## 7.Reverse Integer
+## 7. Reverse Integer
 ```cpp
 class Solution {
 public:
@@ -148,7 +150,7 @@ public:
 };
 ```
 
-## 8.String to Integer (atoi)
+## 8. String to Integer (atoi)
 ```cpp
 class Solution {
 public:
@@ -177,7 +179,7 @@ public:
 };
 ```
 
-## 9.Palindrome Number
+## 9. Palindrome Number
 ```cpp
 class Solution {
 public:
@@ -193,7 +195,7 @@ public:
 };
 ```
 
-## 10.Regular Expression Matching
+## 10. Regular Expression Matching
 ```cpp
 class Solution {
 private:
@@ -222,4 +224,169 @@ public:
        return match(s, p, 0, 0); 
     }
 };
+```
+
+## 11. Container With Most Water
+```cpp
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int n = height.size();
+        int res = 0, i = 0, j = n - 1;
+        while(i < j){
+            res = max(res, min(height[i], height[j]) * (j - i));
+            if(height[i] < height[j])  i++;
+            else j--;
+        }
+        return res;
+    }
+};
+```
+
+## 12. Integer to Roman
+```cpp
+class Solution {
+public:
+    string intToRoman(int num) {
+    string M[] = {"", "M", "MM", "MMM"};
+    string C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+    string X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    string I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];        
+    }
+};
+```
+
+## 13. Roman to Integer
+```cpp
+class Solution {
+public:
+    int romanToInt(string s) {
+        map<char, int> tran = {
+            {'I', 1},
+            {'V', 5},
+            {'X', 10},
+            {'L', 50},
+            {'C', 100},
+            {'D', 500},
+            {'M', 1000},
+        };
+        int res = tran[s.back()];
+        int n = s.size();
+        for(int i = 0; i < n - 1; i++){
+            if(tran[s[i]] < tran[s[i+1]]){
+                res -= tran[s[i]];
+            }
+            else{
+                res += tran[s[i]];
+            }
+        }
+        return res;
+    }
+};
+```
+
+## 14. Longest Common Prefix
+```cpp
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string prefix = "";
+        for(int idx = 0; strs.size() > 0; prefix += strs[0][idx], idx++)
+            for(int i = 0; i < strs.size(); i++)
+                if(idx >= strs[i].size() ||(i > 0 && strs[i][idx] != strs[i-1][idx]))
+                    return prefix;
+        return prefix;
+    }
+};
+```
+
+## 15. 3Sum
+```cpp
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        int n = nums.size();
+        std::sort(nums.begin(), nums.end());
+        for (int i = 0; i < n - 2; i++){
+            if(i == 0 || (nums[i]) != nums[i-1]){
+                int aim = -nums[i], low = i + 1, high = n - 1;
+                while(low < high){
+                    if(nums[low] + nums[high] == aim){
+                        vector<int> tmp(3);
+                        tmp[0] = nums[i];
+                        tmp[1] = nums[low];
+                        tmp[2] = nums[high];
+                        res.push_back(tmp);
+                        while(nums[low] == tmp[1] && low < high) low++;
+                        while(nums[high] == tmp[2] && low < high) high--;
+                    }
+                    else if(nums[low] + nums[high] < aim) low++;
+                    else high--;
+                }
+            }
+            while(nums[i] == nums[i+1] && i < n - 2) i++;
+        }
+        return res;
+    }
+};
+```
+
+## 16. 3Sum Closest
+```cpp
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        int res = nums[0] + nums[1] + nums[2];
+        std::sort(nums.begin(), nums.end());
+        int n = nums.size();
+        for (int i = 0; i < n -2; i++){
+            int low = i + 1, high = n - 1, sum;
+            while(low < high){
+                sum = nums[i] + nums[low] + nums[high];
+                if(sum > target){
+                    res = abs(res - target) > abs(sum - target)? sum : res;
+                    high--;
+                }
+                else if(sum < target){
+                    res = abs(res - target) > abs(sum - target)? sum : res;
+                    low++;
+                }
+                else return target;
+            }
+        }
+        return res;
+    }
+};
+```
+
+## 17. Letter Combinations of a Phone Number
+```cpp
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if(digits.empty()) return vector<string> ();
+        vector<string> res;
+        vector<string> tab = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        int n = digits.size();
+        res.push_back("");
+        for(int i = 0; i < n; i++){
+            vector<string> tmp;
+            int num = digits[i] -'0';
+            for(int j = 0; j < res.size(); j++){
+                for(int k = 0; k < tab[num].size(); k++){
+                    tmp.push_back(res[j] + tab[num][k]);
+                }
+            }
+            res = tmp;
+        }
+        return res;
+    }
+};
+```
+
+## 18. 4Sum
+```cpp
+
 ```
