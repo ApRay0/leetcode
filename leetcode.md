@@ -388,5 +388,68 @@ public:
 
 ## 18. 4Sum
 ```cpp
-
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> res;
+        std::sort(nums.begin(), nums.end());
+        int n = nums.size();
+        for (int i = 0; i < n - 3 ; i++){
+            for (int j = i + 1; j < n - 2; j++){
+                int low = j + 1, high = n - 1;
+                while(low < high){
+                    int sum = nums[i] + nums[j] + nums[low] + nums[high];
+                    if (sum < target) low++;
+                    else if (sum > target) high--;
+                    else{
+                        vector<int> tmp(4);
+                        tmp[0] = nums[i];
+                        tmp[1] = nums[j];
+                        tmp[2] = nums[low];
+                        tmp[3] = nums[high];
+                        res.push_back(tmp);
+                        while(nums[low] == tmp[2] && low < high) low++;
+                        while(nums[high] == tmp[3] && low < high) high--;
+                    }
+                }
+                while(nums[j] == nums[j+1] && j < n - 2) j++;
+            }
+            while(nums[i] == nums[i+1] && i < n - 3) i++;
+        }
+        return res;
+    }
+};
 ```
+
+## 19. Remove Nth Node From End of List
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* res = new ListNode(0);
+        res->next = head;
+        ListNode* p = res;
+        int len = -1;
+        while(p){
+            p = p->next;
+            len++;
+        }
+        len = len - n;
+        p = res;
+        while(len){
+            p = p->next;
+            len--;
+        }
+        p->next = p->next->next;
+        return res->next;
+    }
+};
+`
