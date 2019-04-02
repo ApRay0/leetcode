@@ -452,4 +452,121 @@ public:
         return res->next;
     }
 };
-`
+```
+
+## 20. Valid Parentheses
+```cpp
+class Solution {
+public:
+    bool isValid(string s) {
+        if (s.size() == 1) return false;
+        stack<char> st;
+        for (int i = 0; i < s.size(); i++){
+            if(s[i] == '{' || s[i] == '(' || s[i] == '['){
+                st.push(s[i]);
+            }
+            else{
+                if (st.empty()) return false;
+                else if (s[i] == '}' && st.top() != '{') return false;
+                else if (s[i] == ')' && st.top() != '(') return false;
+                else if (s[i] == ']' && st.top() != '[') return false;
+                else st.pop();
+            }
+        }
+        if (st.empty()) return true;
+        else return false;
+    }
+};
+```
+
+## 21. Merge Two Sorted Lists
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+    if(l1 == nullptr){
+        return l2;
+    }
+    if(l2 == nullptr){
+        return l1;
+    }
+    if(l1->val <= l2->val){
+        l1->next = mergeTwoLists(l1->next, l2);
+        return l1;
+    }
+    else{
+        l2->next = mergeTwoLists(l1, l2->next);
+        return l2;
+    }
+    }
+};
+```
+
+## 22. Generate Parentheses
+```cpp
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        recur(res, "", n, 0);
+        return res;
+    }
+private:
+    void recur(vector<string> &res, string s, int n, int m){
+        if(n == 0 && m == 0){
+            res.push_back(s);
+            return;
+        }
+        if(n != 0) recur(res, s + '(', n - 1, m + 1);
+        if(m != 0) recur(res, s + ')', n, m - 1);
+    }
+};
+```
+
+## 23. Merge k Sorted Lists
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size() == 0) return nullptr;
+        else{
+            while (lists.size()>1){
+                lists.push_back(merge2(lists[0],lists[1]));
+                lists.erase(lists.begin());
+                lists.erase(lists.begin());
+            }
+            return lists.front();
+        }
+    }
+private:
+    ListNode* merge2(ListNode* l1, ListNode* l2){
+        if(l1 == nullptr) return l2;
+        if(l2 == nullptr) return l1;
+        if(l1->val > l2->val){
+            l2->next = merge2(l1, l2->next);
+            return l2;
+        }
+        else{
+            l1->next = merge2(l1->next, l2);
+            return l1;
+        }
+    }
+};
+```
+
