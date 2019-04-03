@@ -570,3 +570,84 @@ private:
 };
 ```
 
+## 24. Swap Nodes in Pairs
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) return head;
+        ListNode* h = new ListNode (0);
+        ListNode* p1 = h;
+        ListNode* p2 = head;
+        ListNode* p3 = head->next;
+        while(1){
+            p2->next = p3->next;
+            p3->next = p2;
+            p1->next = p3;
+            if(p2->next && p2->next->next){
+                p1 = p2;
+                p2 = p1->next;
+                p3 = p2->next;
+            }
+            else{
+                break;
+            }
+        }
+        return h->next;
+    }
+};
+```
+
+## 25. Reverse Nodes in k-Group
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* res = new ListNode (0);
+        res->next = head;
+        ListNode* ex = res;
+        while(1){
+            int count = k;
+            ListNode* last = ex;
+            while(last != nullptr && count != 0){
+                last = last->next;
+                count--;
+            }
+            if(count != 0 || last == nullptr) break;
+            else{
+                ListNode* first = ex->next;
+                for(int i = 0; i < k - 1; i++){
+                    ListNode* p = ex->next;
+                    ListNode* tmp = p->next;
+                    p->next = last->next;
+                    last->next = p;
+                    ex->next = tmp;
+                }
+                ex = first;
+            }
+        }
+        return res->next;
+    }
+};
+```
+
+## 26. Remove Duplicates from Sorted Array
+```cpp
+
+```
