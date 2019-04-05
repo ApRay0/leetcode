@@ -728,5 +728,153 @@ public:
 
 ## 31. Next Permutation
 ```cpp
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int index = n - 1;
+        while(index > 0 && nums[index] <= nums[index - 1]){
+            index--;
+        }
+        if(index == 0){
+            int i = 0, j = n - 1;
+            while(i < j){
+                swap(nums[i], nums[j]);
+                i++;
+                j--;
+            }
+        }
+        else{
+            int i = index, j = n - 1;
+            while (j >= 0 && nums[j] <= nums[i-1]) j--;
+            swap(nums[i-1], nums[j]);
+            j = n - 1;
+            while(i < j){
+                swap(nums[i], nums[j]);
+                i++;
+                j--;
+            }
+        }
+        return;
+    }
+};
+```
+
+## 32. Longest Valid Parentheses
+```cpp
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> sk;
+        int res = 0, i = 0, n = s.size();
+        sk.push(-1);
+        while(i < n){
+            if(s[i] == '('){
+                sk.push(i);
+            }
+            else{
+                sk.pop();
+                if(sk.empty()) sk.push(i);
+                else res = max(res,i - sk.top());
+            }
+            i++;
+        }
+        return res;
+    }
+};
+```
+
+## 33. Search in Rotated Sorted Array
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int i = 0, j = nums.size();
+        int res = -1;
+        while(i < j){
+            int mid = (i + j) / 2;
+            if(nums[mid] == target) return mid;
+            if(nums[mid] > nums[i]){
+                if(nums[mid] > target && nums[i] <= target) j = mid;
+                else i = mid + 1;
+            }
+            else{
+                if(nums[mid] < target && nums[j - 1] >= target) i = mid + 1;
+                else j = mid;
+            }
+        }
+        return res;
+    }
+};
+```
+
+## 34. Find First and Last Position of Element in Sorted Array
+```cpp
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res = {-1, -1};
+        int i = 0, j = nums.size() - 1;
+        if(j == -1) return res;
+        while(i < j){
+            int mid = (i + j) / 2;
+            if (nums[mid] < target) i = mid + 1;
+            else j = mid;
+        }
+        if(nums[i] != target) return res;
+        j = nums.size() - 1;
+        res[0] = i;
+        while(i < j){
+            int mid = (i + j) / 2 + 1;
+            if (nums[mid] > target) j = mid - 1;
+            else i = mid;
+        }
+        res[1] = j;
+        return res;
+    }
+};
+```
+
+## 35. Search Insert Position
+```cpp
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int i = 0, j = nums.size();
+        while(i < j){
+            int mid = (i + j) / 2;
+            if(nums[mid] < target) i = mid + 1;
+            else j = mid;
+        }
+        return i;
+    }
+};
+```
+
+## 36. Valid Sudoku
+```cpp
+class Solution
+{
+public:
+    bool isValidSudoku(vector<vector<char> > &board)
+    {
+        int used1[9][9] = {0}, used2[9][9] = {0}, used3[9][9] = {0};
+        
+        for(int i = 0; i < board.size(); ++ i)
+            for(int j = 0; j < board[i].size(); ++ j)
+                if(board[i][j] != '.')
+                {
+                    int num = board[i][j] - '0' - 1, k = i / 3 * 3 + j / 3;
+                    if(used1[i][num] || used2[j][num] || used3[k][num])
+                        return false;
+                    used1[i][num] = used2[j][num] = used3[k][num] = 1;
+                }
+        
+        return true;
+    }
+};
+```
+## 37. Sudoku Solver
+```cpp
 
 ```
