@@ -649,5 +649,84 @@ public:
 
 ## 26. Remove Duplicates from Sorted Array
 ```cpp
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 2) return n;
+        int res;
+        int i = 1;
+        int index = 1;
+        while(i < n){
+            if(nums[i] != nums[i-1]){
+                nums[index++] = nums[i];
+            }
+            i++;
+        }
+        return index;
+    }
+};
+```
+## 27. Remove Element
+```cpp
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        int index = 0;
+        for(int i = 0; i < n; i++){
+            if(nums[i] != val){
+                nums[index++] = nums[i];
+            }
+        }
+        return index;
+    }
+};
+```
+
+## 28. Implement strStr()
+```cpp
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = haystack.size();
+        int m = needle.size();
+        if (m == 0) return 0;
+        for(int i = 0; i < n - m + 1; i++){
+            int j = 0;
+            int k = i;
+            while(haystack[k] == needle[j] && j < m){
+                k++;
+                j++;
+            }
+            if(j == m) return i;
+        }
+        return -1;
+    }
+};
+```
+
+## 29. Divide Two Integers
+```cpp
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend == INT_MIN){
+            if(divisor == 1) return dividend;
+            else if(divisor == -1) return INT_MAX;
+        }
+        int res = dividend / divisor;
+        return res;
+    }
+};
+```
+
+## 30. Substring with Concatenation of All Words
+```cpp
+
+```
+
+## 31. Next Permutation
+```cpp
 
 ```
