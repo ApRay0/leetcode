@@ -878,3 +878,90 @@ public:
 ```cpp
 
 ```
+
+## 38. Count and Say
+```cpp
+class Solution {
+public:
+    string countAndSay(int n) {
+        string res = "11";
+        if(n == 1) return res="1";
+        int count, i;
+        while(n > 2){
+            string tmp = "";
+            count = 1;
+            for(i = 0; i < res.size() - 1; i++){
+                if(res[i] == res[i+1]){
+                    count++;
+                }
+                else{
+                    tmp = tmp + to_string(count) + res[i];
+                    count = 1;
+                }
+            }
+            tmp = tmp + to_string(count) + res[i];
+            res = tmp;
+            n--;
+        }
+        return res;
+    }
+};
+```
+
+## 39. Combination Sum
+```cpp
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+       std::sort(candidates.begin(), candidates.end());
+        std::vector<std::vector<int> > res;
+        std::vector<int> combination;
+        combinationSum(candidates, target, res, combination, 0);
+        return res;
+    }
+private:
+    void combinationSum(std::vector<int> &candidates, int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int begin) {
+        if (!target) {
+            res.push_back(combination);
+            return;
+        }
+        for (int i = begin; i != candidates.size() && target >= candidates[i]; i++) {
+            combination.push_back(candidates[i]);
+            combinationSum(candidates, target - candidates[i], res, combination, i);
+            combination.pop_back();
+        }
+
+        
+    }
+};
+```
+
+## 40. Combination Sum II
+```cpp
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> res;
+        vector<int> vec;
+        sol (candidates, target, res, vec, 0);
+        return res;
+    }
+private:
+    void sol (vector<int>& candidates, int target, vector<vector<int>>& res, vector<int>& vec, int index){
+        if (!target){
+            res.push_back(vec);
+            return;
+        }
+        for (int i = index; i != candidates.size() && target >= candidates[i]; i++){
+            if (i == index || candidates[i] != candidates[i - 1]){
+                vec.push_back(candidates[i]);
+                sol (candidates, target - candidates[i], res, vec, i + 1);
+                vec.pop_back();
+            }
+        }
+    }
+};
+```
+
+##
