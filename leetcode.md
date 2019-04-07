@@ -965,3 +965,76 @@ private:
 ```
 
 ## 41. First Missing Positive
+```cpp
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < n; i++){
+            while( nums[i] > 0 && nums[i] < n && nums[i] != nums[nums[i] - 1]){
+                swap(nums[i], nums[nums[i] - 1]);
+            }
+        }
+        for (int i = 0; i < n; i++){
+            if(nums[i] != i + 1){
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
+};
+```
+
+## 42. Trapping Rain Water
+```cpp
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.empty()) return 0;
+        int n = height.size();
+        vector<int> ltor (n), rtol (n);
+        int res = 0;
+        ltor[0] = height[0];
+        rtol[0] = height[n - 1];
+        for (int i = 1; i < n; i++){
+            ltor[i] = max(ltor[i - 1], height[i]);
+            rtol[i] = max(rtol[i - 1], height[n - i - 1]);
+        }
+        for (int i = 0; i < n; i++){
+            res += min(ltor[i], rtol[n - i - 1]) - height[i];
+        }
+        return res;
+    }
+};
+```
+
+## 43. 
+```cpp
+
+```
+
+## 44. Wildcard Matching
+```cpp
+
+```
+
+## 45. Jump Game II
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int maxrange = 0, res = 0, low = 0, high = 0, n = nums.size();
+        if(n == 1) return 0;
+        while(maxrange < n - 1){
+            for(int i = low; i <= high && i < n; i++){
+                maxrange = max(i + nums[i], maxrange);
+            }
+            low = high + 1;
+            high = maxrange;
+            res++;
+        }
+        return res;
+    }
+};
+```
+
