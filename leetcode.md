@@ -649,5 +649,392 @@ public:
 
 ## 26. Remove Duplicates from Sorted Array
 ```cpp
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 2) return n;
+        int res;
+        int i = 1;
+        int index = 1;
+        while(i < n){
+            if(nums[i] != nums[i-1]){
+                nums[index++] = nums[i];
+            }
+            i++;
+        }
+        return index;
+    }
+};
+```
+## 27. Remove Element
+```cpp
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        int index = 0;
+        for(int i = 0; i < n; i++){
+            if(nums[i] != val){
+                nums[index++] = nums[i];
+            }
+        }
+        return index;
+    }
+};
+```
+
+## 28. Implement strStr()
+```cpp
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int n = haystack.size();
+        int m = needle.size();
+        if (m == 0) return 0;
+        for(int i = 0; i < n - m + 1; i++){
+            int j = 0;
+            int k = i;
+            while(haystack[k] == needle[j] && j < m){
+                k++;
+                j++;
+            }
+            if(j == m) return i;
+        }
+        return -1;
+    }
+};
+```
+
+## 29. Divide Two Integers
+```cpp
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend == INT_MIN){
+            if(divisor == 1) return dividend;
+            else if(divisor == -1) return INT_MAX;
+        }
+        int res = dividend / divisor;
+        return res;
+    }
+};
+```
+
+## 30. Substring with Concatenation of All Words
+```cpp
 
 ```
+
+## 31. Next Permutation
+```cpp
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int index = n - 1;
+        while(index > 0 && nums[index] <= nums[index - 1]){
+            index--;
+        }
+        if(index == 0){
+            int i = 0, j = n - 1;
+            while(i < j){
+                swap(nums[i], nums[j]);
+                i++;
+                j--;
+            }
+        }
+        else{
+            int i = index, j = n - 1;
+            while (j >= 0 && nums[j] <= nums[i-1]) j--;
+            swap(nums[i-1], nums[j]);
+            j = n - 1;
+            while(i < j){
+                swap(nums[i], nums[j]);
+                i++;
+                j--;
+            }
+        }
+        return;
+    }
+};
+```
+
+## 32. Longest Valid Parentheses
+```cpp
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> sk;
+        int res = 0, i = 0, n = s.size();
+        sk.push(-1);
+        while(i < n){
+            if(s[i] == '('){
+                sk.push(i);
+            }
+            else{
+                sk.pop();
+                if(sk.empty()) sk.push(i);
+                else res = max(res,i - sk.top());
+            }
+            i++;
+        }
+        return res;
+    }
+};
+```
+
+## 33. Search in Rotated Sorted Array
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int i = 0, j = nums.size();
+        int res = -1;
+        while(i < j){
+            int mid = (i + j) / 2;
+            if(nums[mid] == target) return mid;
+            if(nums[mid] > nums[i]){
+                if(nums[mid] > target && nums[i] <= target) j = mid;
+                else i = mid + 1;
+            }
+            else{
+                if(nums[mid] < target && nums[j - 1] >= target) i = mid + 1;
+                else j = mid;
+            }
+        }
+        return res;
+    }
+};
+```
+
+## 34. Find First and Last Position of Element in Sorted Array
+```cpp
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> res = {-1, -1};
+        int i = 0, j = nums.size() - 1;
+        if(j == -1) return res;
+        while(i < j){
+            int mid = (i + j) / 2;
+            if (nums[mid] < target) i = mid + 1;
+            else j = mid;
+        }
+        if(nums[i] != target) return res;
+        j = nums.size() - 1;
+        res[0] = i;
+        while(i < j){
+            int mid = (i + j) / 2 + 1;
+            if (nums[mid] > target) j = mid - 1;
+            else i = mid;
+        }
+        res[1] = j;
+        return res;
+    }
+};
+```
+
+## 35. Search Insert Position
+```cpp
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int i = 0, j = nums.size();
+        while(i < j){
+            int mid = (i + j) / 2;
+            if(nums[mid] < target) i = mid + 1;
+            else j = mid;
+        }
+        return i;
+    }
+};
+```
+
+## 36. Valid Sudoku
+```cpp
+class Solution
+{
+public:
+    bool isValidSudoku(vector<vector<char> > &board)
+    {
+        int used1[9][9] = {0}, used2[9][9] = {0}, used3[9][9] = {0};
+        
+        for(int i = 0; i < board.size(); ++ i)
+            for(int j = 0; j < board[i].size(); ++ j)
+                if(board[i][j] != '.')
+                {
+                    int num = board[i][j] - '0' - 1, k = i / 3 * 3 + j / 3;
+                    if(used1[i][num] || used2[j][num] || used3[k][num])
+                        return false;
+                    used1[i][num] = used2[j][num] = used3[k][num] = 1;
+                }
+        
+        return true;
+    }
+};
+```
+## 37. Sudoku Solver
+```cpp
+
+```
+
+## 38. Count and Say
+```cpp
+class Solution {
+public:
+    string countAndSay(int n) {
+        string res = "11";
+        if(n == 1) return res="1";
+        int count, i;
+        while(n > 2){
+            string tmp = "";
+            count = 1;
+            for(i = 0; i < res.size() - 1; i++){
+                if(res[i] == res[i+1]){
+                    count++;
+                }
+                else{
+                    tmp = tmp + to_string(count) + res[i];
+                    count = 1;
+                }
+            }
+            tmp = tmp + to_string(count) + res[i];
+            res = tmp;
+            n--;
+        }
+        return res;
+    }
+};
+```
+
+## 39. Combination Sum
+```cpp
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+       std::sort(candidates.begin(), candidates.end());
+        std::vector<std::vector<int> > res;
+        std::vector<int> combination;
+        combinationSum(candidates, target, res, combination, 0);
+        return res;
+    }
+private:
+    void combinationSum(std::vector<int> &candidates, int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int begin) {
+        if (!target) {
+            res.push_back(combination);
+            return;
+        }
+        for (int i = begin; i != candidates.size() && target >= candidates[i]; i++) {
+            combination.push_back(candidates[i]);
+            combinationSum(candidates, target - candidates[i], res, combination, i);
+            combination.pop_back();
+        }
+
+        
+    }
+};
+```
+
+## 40. Combination Sum II
+```cpp
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> res;
+        vector<int> vec;
+        sol (candidates, target, res, vec, 0);
+        return res;
+    }
+private:
+    void sol (vector<int>& candidates, int target, vector<vector<int>>& res, vector<int>& vec, int index){
+        if (!target){
+            res.push_back(vec);
+            return;
+        }
+        for (int i = index; i != candidates.size() && target >= candidates[i]; i++){
+            if (i == index || candidates[i] != candidates[i - 1]){
+                vec.push_back(candidates[i]);
+                sol (candidates, target - candidates[i], res, vec, i + 1);
+                vec.pop_back();
+            }
+        }
+    }
+};
+```
+
+## 41. First Missing Positive
+```cpp
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        for (int i = 0; i < n; i++){
+            while( nums[i] > 0 && nums[i] < n && nums[i] != nums[nums[i] - 1]){
+                swap(nums[i], nums[nums[i] - 1]);
+            }
+        }
+        for (int i = 0; i < n; i++){
+            if(nums[i] != i + 1){
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
+};
+```
+
+## 42. Trapping Rain Water
+```cpp
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        if (height.empty()) return 0;
+        int n = height.size();
+        vector<int> ltor (n), rtol (n);
+        int res = 0;
+        ltor[0] = height[0];
+        rtol[0] = height[n - 1];
+        for (int i = 1; i < n; i++){
+            ltor[i] = max(ltor[i - 1], height[i]);
+            rtol[i] = max(rtol[i - 1], height[n - i - 1]);
+        }
+        for (int i = 0; i < n; i++){
+            res += min(ltor[i], rtol[n - i - 1]) - height[i];
+        }
+        return res;
+    }
+};
+```
+
+## 43. 
+```cpp
+
+```
+
+## 44. Wildcard Matching
+```cpp
+
+```
+
+## 45. Jump Game II
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int maxrange = 0, res = 0, low = 0, high = 0, n = nums.size();
+        if(n == 1) return 0;
+        while(maxrange < n - 1){
+            for(int i = low; i <= high && i < n; i++){
+                maxrange = max(i + nums[i], maxrange);
+            }
+            low = high + 1;
+            high = maxrange;
+            res++;
+        }
+        return res;
+    }
+};
+```
+
