@@ -1038,3 +1038,52 @@ public:
 };
 ```
 
+## 46. Permutations
+```cpp
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> ini (1, nums[0]);
+        res.push_back(ini);
+        vector<int> vec;
+        for(int i = 1; i < nums.size(); i++){
+            vector<vector<int>> tmp;
+            for(int j = 0; j < res.size(); j++){
+                for(int k = 0; k <= res[j].size(); k++){
+                    vec = res[j];
+                    vec.insert(vec.begin() + k, nums[i]);
+                    tmp.push_back(vec);
+                }
+            }
+            res = tmp;
+        }
+        return res;
+    }
+};
+```
+
+## 47. Permutations II
+```cpp
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        rec(nums, 0, nums.size(), res);
+        return res;
+    }
+private:
+    void rec(vector<int> num, int begin, int end, vector<vector<int>> &res){
+        if(begin + 1 == end){
+            res.push_back(num);
+            return;
+        }
+        for(int i = begin; i < end; i++){
+            if (i != begin && num[begin] == num[i]) continue;
+            swap(num[i], num[begin]);
+            rec(num, begin + 1, end, res);
+        }
+    }
+};
+```
