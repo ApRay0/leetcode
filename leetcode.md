@@ -1087,3 +1087,64 @@ private:
     }
 };
 ```
+
+## 48. Rotate Image
+```cpp
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        for(int i = 0; i < n / 2; i++){
+            for(int j = 0; j < n - 2 * i - 1; j++){
+                swap(matrix[i][i + j], matrix[i + j][n - 1 - i]);
+                swap(matrix[n - 1 - i][n - 1 - i - j], matrix[n - 1 - i - j][i]);
+                swap(matrix[i][i + j], matrix[n - 1 - i][n - 1 - i - j]);
+            }
+        }
+        return;
+    }
+};
+```
+
+## 49. Group Anagrams
+```cpp
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        int n = strs.size();
+        vector<string> str = strs;
+        vector<vector<string>> res;
+        int j = 0;
+        map<string, int> ref;
+        for (int i = 0; i < n; i++){
+            sort(str[i].begin(), str[i].end());
+            if (ref.find(str[i]) == ref.end()){
+                ref[str[i]] = j;
+                j++;
+                vector<string> tmp (1, strs[i]); 
+                res.push_back(tmp);
+            }
+            else{
+                res[ref[str[i]]].push_back(strs[i]);
+            }
+        }
+        return res;
+    }
+};
+```
+
+## 50. Pow(x, n)
+```cpp
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if(n == 0) return 1;
+        if(n < 0){
+            if (n == INT_MIN) n += 2;
+            n = -n;
+            x = 1/x;
+        }
+        return (n % 2 == 0)? myPow(x * x, n / 2) : x * myPow(x * x, n / 2);
+    }
+};
+```
