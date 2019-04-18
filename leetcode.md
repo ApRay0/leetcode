@@ -1008,7 +1008,7 @@ public:
 };
 ```
 
-## 43. 
+## 43. Multiply Strings
 ```cpp
 
 ```
@@ -1038,8 +1038,6 @@ public:
 };
 ```
 
-<<<<<<< HEAD
-=======
 ## 46. Permutations
 ```cpp
 class Solution {
@@ -1151,3 +1149,5 @@ public:
 };
 ```
 >>>>>>> 75c5099bea2ca2a00d6585187dc033b30afb74b7
+
+## 
