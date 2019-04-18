@@ -1308,3 +1308,132 @@ public:
 ```cpp
 
 ```
+
+## 57. Insert Interval
+```cpp
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> res;
+        int n = intervals.size();
+        if (n == 0){
+            res.push_back(newInterval);
+            return res;
+        }
+        int left = n - 1, right = 0, i = 0;
+        while(left > 0 && intervals[left][0] > newInterval[0]) left--;
+        while(right < n - 1 && intervals[right][1] < newInterval[1]) right++;
+        vector<int> ins (2,0);
+        for(i = 0; i < left; i++){
+            res.push_back(intervals[i]);
+        }
+        if(intervals[left][1] < newInterval[0]){
+            ins[0] = newInterval[0];
+            res.push_back(intervals[i]);
+        }
+        else{
+            ins[0] = intervals[left][0];
+            if(intervals[left][0] > newInterval[0]) ins[0] = newInterval[0];
+        }
+        if(intervals[right][0] > newInterval[1]){
+            ins[1] = newInterval[1];
+            res.push_back(ins);
+            res.push_back(intervals[right]);
+        }
+        else{
+            ins[1] = intervals[right][1];
+            if(intervals[right][1] < newInterval[1]) ins[1] = newInterval[1];
+            res.push_back(ins);
+        }
+        for(i = right + 1; i < n; i++){
+            res.push_back(intervals[i]);
+        }
+        return res;
+    }
+};
+```
+
+## 58. Length of Last Word
+```cpp
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int res = 0;
+        int n = s.size();
+        while(s[n-1] == ' ' ) n--;
+        for(int i = 0; i < n; i++){
+            if(s[i] == ' ') res=0;
+            else res++;
+        }
+        return res;
+    }
+};
+```
+
+## 59. Spiral Matrix II
+```cpp
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> res (n, vector<int> (n));
+        int p = 0;
+        int q = n-1;
+        int num = 1;
+        while (p < q)
+        {
+        for (int i = p; i <= q; i++)
+        {
+            res[p][i] = num;
+            num++;
+        }
+        for (int i = p + 1; i <= q; i++)
+        {
+            res[i][q] = num;
+            num++;
+        }
+        for (int i = q-1; i >= p; i--)
+        {
+            res[q][i] = num;
+            num++;
+        }
+        for (int i = q-1;i >= p + 1;i--)
+        {
+            res[i][p] = num;
+            num++;
+        }
+            p++;
+            q--;
+        }
+        if (p == q) res[p][p] = n*n;
+        return res;
+    }
+};
+```
+
+##  60. Permutation Sequence
+```cpp
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string ans = "";
+        int i, j, t, sum, jie;
+        jie = 1;
+        for (i = 1; i <= n; i++){
+            jie = i * jie;
+            ans += to_string(i);
+        }
+        for (i = 0; i < n; i++){
+            jie /= n - i;
+            for (sum = 0, j = 1; j <= n; j++){
+                if (sum + jie >= k) break;
+                sum += jie;
+                swap(ans[i], ans[i + j]);
+            }
+            k -= sum;
+        }
+        return ans;
+    }
+};
+```
+
+## 
