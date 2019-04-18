@@ -1148,6 +1148,163 @@ public:
     }
 };
 ```
->>>>>>> 75c5099bea2ca2a00d6585187dc033b30afb74b7
 
-## 
+## 51. N-Queens
+```cpp
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        vector<string> piece(n, string(n, '.'));
+        rec(res, piece, 0, n);
+        return res;
+    }
+private:
+    void rec(vector<vector<string>> &res,vector<string> &piece, int row, int &n){
+        if (row == n){
+            res.push_back(piece);
+            return;
+        }
+        for(int col = 0; col < n; col++){
+            if (valid(piece, row, col, n)){
+                piece[row][col] = 'Q';
+                rec(res, piece, row + 1, n);
+                piece[row][col] = '.';
+            }
+        }
+    }
+    bool valid(vector<string> &piece, int row, int col, int &n){
+        for(int i = 0; i < row; i++){
+            if(piece[i][col] == 'Q') return false;
+        }
+        for(int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--){
+            if(piece[i][j] == 'Q') return false;
+        }
+        for(int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++){
+            if(piece[i][j] == 'Q') return false;
+        }
+        return true;
+    }
+};
+```
+
+## 52. N-Queens II
+```cpp
+class Solution {
+public:
+    int totalNQueens(int n) {
+        int res = 0;
+        vector<string> piece (n, string(n, '0'));
+        rec(res, piece, 0, n);
+        return res;
+    }
+private:
+    void rec(int &count, vector<string> &piece, int row, int &n){
+        if (row == n){
+            count++;
+            return;
+        }
+        for (int col = 0; col < n; col++){
+            if (valid(piece, row, col, n)){
+                piece[row][col] = '1';
+                rec(count, piece, row + 1, n);
+                piece[row][col] = '0';
+            }
+        }
+    }
+    bool valid(vector<string> &piece, int row, int col, int & n){
+        for (int i = 0; i < row; i++){
+            if (piece[i][col] == '1') return false;
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >=0; i--, j--){
+            if (piece[i][j] == '1') return false;
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++){
+            if (piece[i][j] == '1') return false;
+        }
+        return true;
+    }
+};
+```
+
+## 53. Maximum Subarray
+```cpp
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = nums[0];
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++){
+            sum += nums[i];
+            res = max(sum, res);
+            sum = max(sum, 0);
+        }
+        return res;
+    }
+};
+```
+
+## 54. Spiral Matrix
+```cpp
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+        if (matrix.empty()) return res;
+        int n = matrix.size() - 1, m = matrix[0].size() - 1;
+        rec(res, matrix, 0, 0, n, m);
+        return res;
+    }
+private:
+    void rec(vector<int> &res, vector<vector<int>> &matrix, int row, int col, int n, int m){
+        if ( row == n) {
+            for (int j = col; j <= m; j++){
+                res.push_back(matrix[row][j]);
+            }
+            return;
+        }
+        if ( col == m) {
+            for (int i = row; i <= n; i++){
+                res.push_back(matrix[i][col]);
+            }
+            return;
+        }
+        if (row > n || col > m) return;
+        for (int j = col; j < m; j++){
+            res.push_back(matrix[row][j]);
+        }
+        for (int i = row; i < n; i++){
+            res.push_back(matrix[i][m]);
+        }
+        for (int j = m; j > col; j--){
+            res.push_back(matrix[n][j]);
+        }
+        for (int i = n; i > row; i--){
+            res.push_back(matrix[i][col]);
+        }
+        rec(res, matrix, row + 1, col + 1, n - 1, m - 1);
+    }
+};
+```
+
+## 55. Jump Game
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        if (nums.size() == 1) return true;
+        int index = 0, maxrange = 0, n = nums.size() - 1;
+        while(index <= maxrange){
+            maxrange = max(maxrange, index + nums[index]);
+            if (maxrange >= n) return true;
+            index++;
+        }
+        return false;
+    }
+};
+```
+
+## 56. Merge Intervals
+```cpp
+
+```
