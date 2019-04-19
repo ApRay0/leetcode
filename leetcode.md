@@ -1436,4 +1436,85 @@ public:
 };
 ```
 
-## 
+## 61. Rotate List
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (head == nullptr) return head;
+        ListNode* p = head;
+        ListNode* res;
+        int n = 1;
+        while(p->next){
+            p = p->next;
+            n++;
+        }
+        p->next = head;
+        k %= n;
+        n -= k;
+        while(n){
+            n--;
+            p = p->next;
+        }
+        res = p->next;
+        p->next = nullptr;
+        return res;
+    }
+};
+```
+
+## 62. Unique Paths
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> res (m, vector<int> (n,1));
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                res[i][j] = res[i-1][j] + res[i][j-1];
+            }
+        }
+        return res[m-1][n-1];
+    }
+};
+```
+
+## 63. Unique Paths II
+```cpp
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size(), n = obstacleGrid[0].size();
+        int i = 0, j = 0;
+        vector<vector<long int>> res (m, vector<long int> (n, 0));
+        while(i < m && obstacleGrid[i][0] == 0){
+            res[i][0] = 1;
+            i++;
+        }
+        i = 0;
+        while(i < n && obstacleGrid[0][i] == 0){
+            res[0][i] = 1;
+            i++;
+        }
+        for (i = 1; i < m; i++){
+            for (j = 1; j < n; j++){
+                if (obstacleGrid[i][j] == 1){
+                    res[i][j] = 0;
+                }
+                else{
+                    res[i][j] = res[i-1][j] + res[i][j-1];
+                }
+            }
+        }
+        return res[m-1][n-1];
+    }
+};
+```
