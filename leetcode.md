@@ -1546,4 +1546,82 @@ public:
 
 ```
 
+## 66. Plus One
+```cpp
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int n = digits.size();
+        for (int i = n - 1; i >= 0; i--){
+            if (digits[i] == 9){
+                digits[i] = 0;
+            }
+            else{
+                digits[i] += 1;
+                return digits;
+            }
+        }
+        digits[0] = 1;
+        digits.push_back(0);
+        return digits;
+    }
+};
+```
+
+## 67. Add Binary
+```cpp
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string res = "";
+        int i = a.size() - 1, j = b.size() - 1, c = 0;
+        while (i >= 0 || j >= 0 || c == 1){
+            c += i >= 0? a[i] - '0': 0;
+            c += j >= 0? b[j] - '0': 0;
+            res = char(c % 2 + '0') + res;
+            c /= 2;
+            i--;
+            j--;
+        }
+        return res;
+    }
+};
+```
+
+## 68. Text Justification
+```cpp
+
+```
+
+## 69. Sqrt(x)
+```cpp
+class Solution {
+public:
+    int mySqrt(int x) {
+        long i = 1;
+        while(i * i <= x){
+            i++;
+        }
+        return i - 1;
+    }
+};
+```
+
+## 70. Climbing Stairs
+```cpp
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n == 1) return 1;
+        vector<int> res (n, 0);
+        res[0] = 1;
+        res[1] = 2;
+        for (int i = 2; i < n; i++){
+            res[i] = res[i-1] + res[i-2];
+        }
+        return res[n-1];
+    }
+};
+```
+
 ## 
